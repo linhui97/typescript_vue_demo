@@ -33,31 +33,31 @@
           <li class="categories dropdown">
             <a class="current-category dropdown-toggle"
                data-toggle="dropdown">
-              全部
-              <span class="count badge">{{doFilter(-1)}}</span>
+              {{meunTitle}}
+              <span class="count badge">{{doFilter(cid)}}</span>
             </a>
             <ul class="dropdown-menu">
               <li class="total"
-                  @click="doFilterByCateId(-1)">
+                  @click="doFilterByCateId(-1, '全部')">
                 <a>
                   全部
                   <span class="count badge">{{doFilter(-1)}}</span>
                 </a>
               </li>
               <li class="divider"></li>
-              <li @click="doFilterByCateId(0)">
+              <li @click="doFilterByCateId(0, '工作')">
                 <a>
                   工作
                   <span class="count badge">{{doFilter(0)}}</span>
                 </a>
               </li>
-              <li @click="doFilterByCateId(1)">
+              <li @click="doFilterByCateId(1, '生活')">
                 <a>
                   生活
                   <span class="count badge">{{doFilter(1)}}</span>
                 </a>
               </li>
-              <li @click="doFilterByCateId(2)">
+              <li @click="doFilterByCateId(2, '学习')">
                 <a>
                   学习
                   <span class="count badge">{{doFilter(2)}}</span>
@@ -77,6 +77,9 @@ import ItemData from "../model/ItemData";
 
 @Component
 export default class MenuBar extends Vue {
+  cid:number = -1;
+  meunTitle:string = '全部';
+
   showAdd() {
     this.$store.state.transMemo = new ItemData(-1, 0);
     this.$store.state.isShow = true;
@@ -92,7 +95,9 @@ export default class MenuBar extends Vue {
     }
   }
 
-  doFilterByCateId(cid: number): void {
+  doFilterByCateId(cid: number, title: string): void {
+    this.cid = cid;
+    this.meunTitle = title;
     this.$store.state.filterCateId = cid;
   }
 }
